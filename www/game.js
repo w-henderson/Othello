@@ -69,7 +69,7 @@ function showMessage(title, message) {
   document.getElementById("message").className = "messageShown";
   window.setTimeout(function () {
     document.getElementById("message").className = "";
-  }, 4000)
+  }, 4000);
 }
 
 function endGameWithMessage(winner, message) {
@@ -79,6 +79,7 @@ function endGameWithMessage(winner, message) {
     document.getElementById("board").className = "hidden";
     document.getElementById("turnIndicator").className = "fa fa-circle";
     board.reset();
+    renderBoard(1);
   }, 4000);
 }
 
@@ -146,14 +147,18 @@ function aiMakeMove() {
 }
 
 function startNormalGame() {
-  renderBoard(1);
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
   document.getElementById("board").className = "";
+  window.setTimeout(function () {
+    renderBoard(1);
+  }, 500);
 }
 
 function startAIGame() {
   ai = true;
-  renderBoard(1);
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
   document.getElementById("board").className = "";
+  window.setTimeout(function () {
+    renderBoard(1);
+  }, 500);
 }
