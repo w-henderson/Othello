@@ -1,0 +1,14 @@
+{
+  "name": "othello",
+  "version": "0.0.1",
+  "description": "A simple Electron app to play the game Othello.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "William Henderson",
+  "devDependencies": {
+    "electron": "^10.1.5",
+    "electron-reloader": "^1.0.1"
+  }
+}
