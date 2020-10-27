@@ -19,4 +19,4 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', app.quit)
 
-require('electron-reloader')(module);
+try { require('electron-reloader')(module) } catch (_) { };
