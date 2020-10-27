@@ -7,7 +7,8 @@ function createWindow() {
     height: 455,
     frame: false,
     resizable: false,
-    webPreferences: { nodeIntegration: true }
+    webPreferences: { nodeIntegration: true },
+    icon: "images/icon.png"
   });
 
   mainWindow.loadFile('www/index.html');
