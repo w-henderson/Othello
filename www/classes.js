@@ -118,133 +118,35 @@ class Board {
 
     if (typeof this.content[y][x] === "object") return validMove;
 
-    // Validate upwards
-    let proposedPieces = [];
-    for (let i = y - 1; i >= 0; i--) {
-      if (typeof this.content[i][x] === "object") {
-        if (this.content[i][x].player != player) { proposedPieces.push([x, i]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
-          }
-          break;
-        }
-      } else { break; }
-    }
+    let possibleDirections = [
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [1, -1],
+      [0, -1],
+      [-1, -1],
+      [-1, 0],
+      [-1, 1]
+    ];
 
-    // Validate downwards
-    proposedPieces = [];
-    for (let i = y + 1; i < 8; i++) {
-      if (typeof this.content[i][x] === "object") {
-        if (this.content[i][x].player != player) { proposedPieces.push([x, i]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
+    possibleDirections.forEach(function (direction) {
+      let proposedPieces = [];
+      let currentPosition = { x: x + direction[0], y: y + direction[1] };
+      while (currentPosition.x >= 0 && currentPosition.x < 8 && currentPosition.y >= 0 && currentPosition.y < 8) {
+        if (typeof this.content[currentPosition.y][currentPosition.x] === "object") {
+          if (this.content[currentPosition.y][currentPosition.x].player != player) { proposedPieces.push([currentPosition.x, currentPosition.y]); }
+          else {
+            if (proposedPieces.length != 0) {
+              validMove = true;
+              piecesToTake = piecesToTake.concat(proposedPieces);
+            }
+            break;
           }
-          break;
-        }
-      } else { break; }
-    }
-
-    // Validate right
-    proposedPieces = [];
-    for (let i = x + 1; i < 8; i++) {
-      if (typeof this.content[y][i] === "object") {
-        if (this.content[y][i].player != player) { proposedPieces.push([i, y]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
-          }
-          break;
-        }
-      } else { break; }
-    }
-
-    // Validate left
-    proposedPieces = [];
-    for (let i = x - 1; i >= 0; i--) {
-      if (typeof this.content[y][i] === "object") {
-        if (this.content[y][i].player != player) { proposedPieces.push([i, y]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
-          }
-          break;
-        }
-      } else { break; }
-    }
-
-    // Validate up and left
-    proposedPieces = [];
-    let distance = 1;
-    while (x - distance >= 0 && y - distance >= 0) {
-      if (typeof this.content[y - distance][x - distance] === "object") {
-        if (this.content[y - distance][x - distance].player != player) { proposedPieces.push([x - distance, y - distance]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
-          }
-          break;
-        }
-      } else { break; }
-      distance++;
-    }
-
-    // Validate up and right
-    proposedPieces = [];
-    distance = 1;
-    while (x + distance < 8 && y - distance >= 0) {
-      if (typeof this.content[y - distance][x + distance] === "object") {
-        if (this.content[y - distance][x + distance].player != player) { proposedPieces.push([x + distance, y - distance]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
-          }
-          break;
-        }
-      } else { break; }
-      distance++;
-    }
-
-    // Validate down and left
-    proposedPieces = [];
-    distance = 1;
-    while (x - distance >= 0 && y + distance < 8) {
-      if (typeof this.content[y + distance][x - distance] === "object") {
-        if (this.content[y + distance][x - distance].player != player) { proposedPieces.push([x - distance, y + distance]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
-          }
-          break;
-        }
-      } else { break; }
-      distance++;
-    }
-
-    // Validate down and right
-    proposedPieces = [];
-    distance = 1;
-    while (x + distance < 8 && y + distance < 8) {
-      if (typeof this.content[y + distance][x + distance] === "object") {
-        if (this.content[y + distance][x + distance].player != player) { proposedPieces.push([x + distance, y + distance]); }
-        else {
-          if (proposedPieces.length != 0) {
-            validMove = true;
-            piecesToTake = piecesToTake.concat(proposedPieces);
-          }
-          break;
-        }
-      } else { break; }
-      distance++;
-    }
+        } else { break; }
+        currentPosition.x += direction[0];
+        currentPosition.y += direction[1];
+      }
+    }, this);
 
     if (returnPieces) return piecesToTake;
     return validMove;
