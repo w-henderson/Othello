@@ -4,27 +4,40 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="classes.js"></script>
+    <script src="dropdown.js"></script>
     <script src="game.js"></script>
 </head>
 
 <body>
-    <div class="dragArea">Othello<span style="float:right;">
-        <i class="fa fa-circle" style="color:black" id="turnIndicator"></i>
-        <i class="fa fa-bars" style="-webkit-app-region: no-drag;" onclick="toggleDropdown();"></i>
-    </span></div>
+    <div class="browserContainer">
+        <div class="dragArea">Othello<span style="float:right;">
+            <i class="fa fa-circle" style="color:black" id="turnIndicator"></i>
+            <i class="fa fa-bars" style="-webkit-app-region: no-drag; cursor: pointer;" onclick="toggleDropdown();"></i>
+        </span></div>
 
-    <div id="board" class="hidden"></div>
-    <div id="menu">
-        <h1>Welcome to Othello</h1>
-        <button onclick="startNormalGame();">Play (Normal)</button>
-        <button onclick="startAIGame();">Play (AI)</button>
-    </div>
+        <div id="board" class="hidden"></div>
+        <div id="menu">
+            <h1>Welcome to Othello</h1>
+            <button onclick="startNormalGame();">Play (Normal)</button>
+            <button onclick="startAIGame();">Play (AI)</button>
+        </div>
 
-    <div id="message">
-        <h1 id="messageTitle">Message title goes here.</h1>
-        <span id="messageContent">Message content goes here. It can be pretty long.</span>
+        <div id="message">
+            <h1 id="messageTitle">Message title goes here.</h1>
+            <span id="messageContent">Message content goes here. It can be pretty long.</span>
+        </div>
+        <div id="dropdownMenu">
+            <span onclick="endGame();"><i class="fa fa-flag"></i> End game</span>
+            <span onclick="window.location.reload(true);"><i class="fa fa-power-off"></i> Reload application</span><hr>
+
+            <span onclick="crossPlatformOpenURL('https://github.com/w-henderson/Othello');"><i class="fa fa-code"></i> Visit the GitHub</span>
+            <span onclick="crossPlatformOpenURL('https://github.com/w-henderson/Othello/issues/new');"><i class="fa fa-bug"></i> Report a bug</span><hr>
+
+            <span style="cursor: text; font-size: 15px;">Developed by William Henderson, licensed under the GPL-3.0 license.</span><hr>
+
+            <span onclick="window.close()"><i class="fa fa-times-circle"></i> Exit Othello</span>            
+        </div>
     </div>
-    <div id="dropdownMenu"></div>
 </body>
 
 </html>

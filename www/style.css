@@ -6,8 +6,22 @@ body {
     width: 100%;
     height: 100%;
     font-family: Inter;
-    background-color: #201A23;
+    background-color: #121014;
     color: #F0FDED;
+}
+
+/* This section is so the game can run in a browser with the right scaling */
+.browserContainer {
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    height: 455px;
+    background-color: #201A23;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px black;
 }
 
 .dragArea {
@@ -27,6 +41,7 @@ body {
 
 .dragArea i {
     margin: 3px 5px 0px 10px;
+    transition: 200ms;
 }
 
 #board {
@@ -94,6 +109,7 @@ body {
     box-shadow: 0px 0px 10px black;
     text-shadow: 0px 0px 10px black;
     transition: 100ms;
+    cursor: pointer;
 }
 
 #menu button:hover {
@@ -102,7 +118,6 @@ body {
 }
 
 #turnIndicator {
-    transition: 500ms;
     opacity: 0;
 }
 
@@ -136,11 +151,38 @@ body {
 
 #dropdownMenu {
     width: 250px;
-    height: 350px;
+    height: 300px;
     background-color: #121014;
     position: absolute;
-    top: 0;
+    top: -300px;
     right: 0;
-    z-index: 1;
-    display: none;
+    z-index: 2;
+    transition: 500ms;
+    border-radius: 0 0 0 30px;
+    box-shadow: 0 0 20px black;
+    box-sizing: border-box;
+    padding: 10px 20px 20px;
+    font-size: 20px;
+    opacity: 0;
+}
+
+#dropdownMenu i {
+    font-weight: 800;
+    color: #56dbb1;
+    margin-right: 5px;;
+}
+
+#dropdownMenu span {
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.menuActive {
+    top: 55px !important;
+    opacity: 1 !important;
+}
+
+i:active {
+    transform: scale(0.8);
 }

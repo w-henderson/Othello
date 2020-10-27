@@ -6,7 +6,8 @@ function createWindow() {
     width: 400,
     height: 455,
     frame: false,
-    resizable: false
+    resizable: false,
+    webPreferences: { nodeIntegration: true }
   });
 
   mainWindow.loadFile('www/index.html');

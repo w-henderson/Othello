@@ -84,6 +84,8 @@ function endGameWithMessage(winner, message) {
 }
 
 function makeMove(x, y) {
+  menuActive = false;
+  updateMenuRender();
   if (ai && board.playerTurn === 2) return;
   let piecesToTakeXY = board.validateMove(board.playerTurn, x, y, true);
   piecesToTakeXY.forEach(function (value) {
@@ -147,6 +149,8 @@ function aiMakeMove() {
 }
 
 function startNormalGame() {
+  menuActive = false;
+  updateMenuRender();
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
   document.getElementById("board").className = "";
   window.setTimeout(function () {
@@ -155,6 +159,8 @@ function startNormalGame() {
 }
 
 function startAIGame() {
+  menuActive = false;
+  updateMenuRender();
   ai = true;
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
   document.getElementById("board").className = "";
