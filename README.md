@@ -10,7 +10,7 @@ There are three ways you can get this program.
 - Clone the repo, install dependencies, then run `npm start`
 
 ## Features
-This version of Othello features two modes, one where you can play against another computer on the same computer, and another where you can play against a very basic AI. If you've ever looked into Othello strategies, you'll easily beat the AI, but less skilled players such as myself will have a hard time beating it! The program also features a stylish user interface with slick animations and a responsive feel.
+This version of Othello features two modes, one where you can play against someone on the same computer, and another where you can play against a very basic AI. If you've ever looked into Othello strategies, you'll easily beat the AI, but less skilled players such as myself will have a hard time beating it! The program also features a stylish user interface with slick animations and a responsive feel.
 
 ## Screenshots
 ![Screenshot of Home](images/screenshot_home.png)
