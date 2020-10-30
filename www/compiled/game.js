@@ -158,7 +158,7 @@ function aiMakeMove() {
     }
 }
 function startNormalGame() {
-    menuActive = 69420;
+    menuActive = false;
     updateMenuRender();
     ai = false;
     document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
