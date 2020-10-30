@@ -151,6 +151,7 @@ function aiMakeMove(): void {
 function startNormalGame(): void {
   menuActive = false;
   updateMenuRender();
+  ai = false;
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
   document.getElementById("board").className = "";
   window.setTimeout(function () {
