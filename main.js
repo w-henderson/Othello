@@ -20,4 +20,5 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', app.quit)
 
+// Use electron-reloader for hot reload while developing if possible, ignore if not
 try { require('electron-reloader')(module) } catch (_) { };
