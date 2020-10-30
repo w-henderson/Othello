@@ -1,5 +1,7 @@
 const board: Board = new Board(8, 8);
-var ai: boolean = false;
+const ai: AI = new AI();
+
+var aiMode: boolean = false;
 
 function renderBoard(showValidPositions: number = 0, letAIMakeMove: boolean = false): void {
   if (board.playerTurn === 1) {
@@ -69,7 +71,7 @@ function showMessage(title: string, message: string): void {
   document.getElementById("message").className = "messageShown";
   window.setTimeout(function () {
     document.getElementById("message").className = "";
-  }, 4000);
+  }, 3000);
 }
 
 function endGameWithMessage(winner: number, message: string): void {
@@ -80,19 +82,19 @@ function endGameWithMessage(winner: number, message: string): void {
     document.getElementById("turnIndicator").className = "fa fa-circle";
     board.reset();
     renderBoard(1);
-  }, 4000);
+  }, 3000);
 }
 
 function makeMove(x: number, y: number): void {
   menuActive = false;
   updateMenuRender();
-  if (ai && board.playerTurn === 2) return;
+  if (aiMode && board.playerTurn === 2) return;
   let piecesToTakeXY = board.getTakenPieces(board.playerTurn, x, y);
   piecesToTakeXY.forEach(function (value) {
     board.content[value[1]][value[0]].flip();
   })
   board.place(new Piece(board.playerTurn), x, y);
-  if (ai && board.playerTurn === 2) {
+  if (aiMode && board.playerTurn === 2) {
     renderBoard(board.playerTurn, true);
   } else {
     renderBoard(board.playerTurn);
@@ -100,19 +102,9 @@ function makeMove(x: number, y: number): void {
 }
 
 function aiMakeMove(): void {
-  let possibleMoves: number[][] = board.getPossibleMoves(2);
-  let bestMove: number[] = [];
-  let bestScore: number = 0;
+  let aiMove: number[] = ai.makeMove();
 
-  possibleMoves.forEach(function (move) {
-    let piecesToTake = board.getTakenPieces(2, move[0], move[1]);
-    if (piecesToTake.length > bestScore) {
-      bestMove = move;
-      bestScore = piecesToTake.length;
-    }
-  });
-
-  if (bestScore === 0) {
+  if (aiMove.length === 0) {
     if (board.isFull()) {
       let pieces: number[] = board.piecesOfEachPlayer();
       if (pieces[0] > pieces[1]) {
@@ -139,11 +131,11 @@ function aiMakeMove(): void {
       }
     }
   } else {
-    let piecesToTakeXY: number[][] = board.getTakenPieces(2, bestMove[0], bestMove[1]);
+    let piecesToTakeXY: number[][] = board.getTakenPieces(2, aiMove[0], aiMove[1]);
     piecesToTakeXY.forEach(function (value) {
       board.content[value[1]][value[0]].flip();
     })
-    board.place(new Piece(board.playerTurn), bestMove[0], bestMove[1]);
+    board.place(new Piece(board.playerTurn), aiMove[0], aiMove[1]);
     renderBoard(board.playerTurn);
   }
 }
@@ -151,7 +143,7 @@ function aiMakeMove(): void {
 function startNormalGame(): void {
   menuActive = false;
   updateMenuRender();
-  ai = false;
+  aiMode = false;
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
   document.getElementById("board").className = "";
   window.setTimeout(function () {
@@ -162,7 +154,7 @@ function startNormalGame(): void {
 function startAIGame(): void {
   menuActive = false;
   updateMenuRender();
-  ai = true;
+  aiMode = true;
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
   document.getElementById("board").className = "";
   window.setTimeout(function () {

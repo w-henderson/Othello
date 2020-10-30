@@ -3,8 +3,9 @@
         "outDir": "www/compiled/"
     },
     "files": [
-        "www/classes.ts",
+        "www/board.ts",
         "www/dropdown.ts",
-        "www/game.ts"
+        "www/game.ts",
+        "www/ai.ts"
     ]
 }

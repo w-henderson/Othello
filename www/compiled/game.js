@@ -1,5 +1,6 @@
 var board = new Board(8, 8);
-var ai = false;
+var ai = new AI();
+var aiMode = false;
 function renderBoard(showValidPositions, letAIMakeMove) {
     if (showValidPositions === void 0) { showValidPositions = 0; }
     if (letAIMakeMove === void 0) { letAIMakeMove = false; }
@@ -73,7 +74,7 @@ function showMessage(title, message) {
     document.getElementById("message").className = "messageShown";
     window.setTimeout(function () {
         document.getElementById("message").className = "";
-    }, 4000);
+    }, 3000);
 }
 function endGameWithMessage(winner, message) {
     if (winner != 0)
@@ -85,19 +86,19 @@ function endGameWithMessage(winner, message) {
         document.getElementById("turnIndicator").className = "fa fa-circle";
         board.reset();
         renderBoard(1);
-    }, 4000);
+    }, 3000);
 }
 function makeMove(x, y) {
     menuActive = false;
     updateMenuRender();
-    if (ai && board.playerTurn === 2)
+    if (aiMode && board.playerTurn === 2)
         return;
     var piecesToTakeXY = board.getTakenPieces(board.playerTurn, x, y);
     piecesToTakeXY.forEach(function (value) {
         board.content[value[1]][value[0]].flip();
     });
     board.place(new Piece(board.playerTurn), x, y);
-    if (ai && board.playerTurn === 2) {
+    if (aiMode && board.playerTurn === 2) {
         renderBoard(board.playerTurn, true);
     }
     else {
@@ -105,17 +106,8 @@ function makeMove(x, y) {
     }
 }
 function aiMakeMove() {
-    var possibleMoves = board.getPossibleMoves(2);
-    var bestMove = [];
-    var bestScore = 0;
-    possibleMoves.forEach(function (move) {
-        var piecesToTake = board.getTakenPieces(2, move[0], move[1]);
-        if (piecesToTake.length > bestScore) {
-            bestMove = move;
-            bestScore = piecesToTake.length;
-        }
-    });
-    if (bestScore === 0) {
+    var aiMove = ai.makeMove();
+    if (aiMove.length === 0) {
         if (board.isFull()) {
             var pieces = board.piecesOfEachPlayer();
             if (pieces[0] > pieces[1]) {
@@ -149,18 +141,18 @@ function aiMakeMove() {
         }
     }
     else {
-        var piecesToTakeXY = board.getTakenPieces(2, bestMove[0], bestMove[1]);
+        var piecesToTakeXY = board.getTakenPieces(2, aiMove[0], aiMove[1]);
         piecesToTakeXY.forEach(function (value) {
             board.content[value[1]][value[0]].flip();
         });
-        board.place(new Piece(board.playerTurn), bestMove[0], bestMove[1]);
+        board.place(new Piece(board.playerTurn), aiMove[0], aiMove[1]);
         renderBoard(board.playerTurn);
     }
 }
 function startNormalGame() {
     menuActive = false;
     updateMenuRender();
-    ai = false;
+    aiMode = false;
     document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
     document.getElementById("board").className = "";
     window.setTimeout(function () {
@@ -170,7 +162,7 @@ function startNormalGame() {
 function startAIGame() {
     menuActive = false;
     updateMenuRender();
-    ai = true;
+    aiMode = true;
     document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
     document.getElementById("board").className = "";
     window.setTimeout(function () {
