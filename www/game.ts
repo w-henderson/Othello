@@ -1,15 +1,15 @@
-const board = new Board();
-var ai = false;
+const board: Board = new Board(8, 8);
+var ai: boolean = false;
 
-function renderBoard(showValidPositions = 0, letAIMakeMove = false) {
+function renderBoard(showValidPositions: number = 0, letAIMakeMove: boolean = false): void {
   if (board.playerTurn === 1) {
     document.getElementById("turnIndicator").style.color = "#000";
   } else {
     document.getElementById("turnIndicator").style.color = "#F0FDED";
   }
 
-  let finalHTML = "<table>";
-  someValidMove = false;
+  let finalHTML: string = "<table>";
+  let someValidMove: boolean = false;
   for (let y = 0; y < 8; y++) {
     finalHTML += "<tr>";
     for (let x = 0; x < 8; x++) {
@@ -28,10 +28,10 @@ function renderBoard(showValidPositions = 0, letAIMakeMove = false) {
   finalHTML += "</table>";
   document.getElementById("board").innerHTML = finalHTML;
 
-  let boardAlreadyRendered = false;
+  let boardAlreadyRendered: boolean = false;
   if (!someValidMove) {
     if (board.isFull()) {
-      pieces = board.piecesOfEachPlayer();
+      let pieces: number[] = board.piecesOfEachPlayer();
       if (pieces[0] > pieces[1]) {
         endGameWithMessage(1, `They had ${(pieces[0] - pieces[1])} more pieces.`);
       } else if (pieces[1] > pieces[0]) {
@@ -46,7 +46,7 @@ function renderBoard(showValidPositions = 0, letAIMakeMove = false) {
         renderBoard(board.playerTurn);
         boardAlreadyRendered = true;
       } else {
-        pieces = board.piecesOfEachPlayer();
+        let pieces: number[] = board.piecesOfEachPlayer();
         if (pieces[0] > pieces[1]) {
           endGameWithMessage(1, `Neither player could move but they had ${(pieces[0] - pieces[1])} more pieces.`);
         } else if (pieces[1] > pieces[0]) {
@@ -63,7 +63,7 @@ function renderBoard(showValidPositions = 0, letAIMakeMove = false) {
   }
 }
 
-function showMessage(title, message) {
+function showMessage(title: string, message: string): void {
   document.getElementById("messageTitle").innerHTML = title;
   document.getElementById("messageContent").innerHTML = message;
   document.getElementById("message").className = "messageShown";
@@ -72,7 +72,7 @@ function showMessage(title, message) {
   }, 4000);
 }
 
-function endGameWithMessage(winner, message) {
+function endGameWithMessage(winner: number, message: string): void {
   if (winner != 0) showMessage(`Player ${winner.toString()} has won!`, message);
   else showMessage("It's a draw!", message);
   window.setTimeout(function () {
@@ -83,11 +83,11 @@ function endGameWithMessage(winner, message) {
   }, 4000);
 }
 
-function makeMove(x, y) {
+function makeMove(x: number, y: number): void {
   menuActive = false;
   updateMenuRender();
   if (ai && board.playerTurn === 2) return;
-  let piecesToTakeXY = board.validateMove(board.playerTurn, x, y, true);
+  let piecesToTakeXY = board.getTakenPieces(board.playerTurn, x, y);
   piecesToTakeXY.forEach(function (value) {
     board.content[value[1]][value[0]].flip();
   })
@@ -99,13 +99,13 @@ function makeMove(x, y) {
   }
 }
 
-function aiMakeMove() {
-  let possibleMoves = board.getPossibleMoves(2);
-  let bestMove = [];
-  let bestScore = 0;
+function aiMakeMove(): void {
+  let possibleMoves: number[][] = board.getPossibleMoves(2);
+  let bestMove: number[] = [];
+  let bestScore: number = 0;
 
   possibleMoves.forEach(function (move) {
-    let piecesToTake = board.validateMove(2, move[0], move[1], true);
+    let piecesToTake = board.getTakenPieces(2, move[0], move[1]);
     if (piecesToTake.length > bestScore) {
       bestMove = move;
       bestScore = piecesToTake.length;
@@ -114,7 +114,7 @@ function aiMakeMove() {
 
   if (bestScore === 0) {
     if (board.isFull()) {
-      pieces = board.piecesOfEachPlayer();
+      let pieces: number[] = board.piecesOfEachPlayer();
       if (pieces[0] > pieces[1]) {
         endGameWithMessage(1, `They had ${(pieces[0] - pieces[1])} more pieces.`);
       } else if (pieces[1] > pieces[0]) {
@@ -128,7 +128,7 @@ function aiMakeMove() {
         board.playerTurn = 1;
         renderBoard(board.playerTurn);
       } else {
-        pieces = board.piecesOfEachPlayer();
+        let pieces: number[] = board.piecesOfEachPlayer();
         if (pieces[0] > pieces[1]) {
           endGameWithMessage(1, `Neither player could move but they had ${(pieces[0] - pieces[1])} more pieces.`);
         } else if (pieces[1] > pieces[0]) {
@@ -139,7 +139,7 @@ function aiMakeMove() {
       }
     }
   } else {
-    let piecesToTakeXY = board.validateMove(2, bestMove[0], bestMove[1], true);
+    let piecesToTakeXY: number[][] = board.getTakenPieces(2, bestMove[0], bestMove[1]);
     piecesToTakeXY.forEach(function (value) {
       board.content[value[1]][value[0]].flip();
     })
@@ -148,7 +148,7 @@ function aiMakeMove() {
   }
 }
 
-function startNormalGame() {
+function startNormalGame(): void {
   menuActive = false;
   updateMenuRender();
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive";
@@ -158,7 +158,7 @@ function startNormalGame() {
   }, 500);
 }
 
-function startAIGame() {
+function startAIGame(): void {
   menuActive = false;
   updateMenuRender();
   ai = true;

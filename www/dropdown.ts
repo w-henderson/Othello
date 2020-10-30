@@ -1,17 +1,17 @@
 const electron = require("electron");
 
-var menuActive = false;
+var menuActive: boolean = false;
 
-function toggleDropdown() {
+function toggleDropdown(): void {
   menuActive = !menuActive;
   updateMenuRender();
 }
 
-function updateMenuRender() {
+function updateMenuRender(): void {
   document.getElementById("dropdownMenu").className = menuActive ? "menuActive" : "";
 }
 
-function endGame() {
+function endGame(): void {
   document.getElementById("board").className = "hidden";
   document.getElementById("turnIndicator").className = "fa fa-circle";
   board.reset();
@@ -22,7 +22,7 @@ function endGame() {
   }, 500);
 }
 
-function crossPlatformOpenURL(url) {
+function crossPlatformOpenURL(url): void {
   try {
     electron.shell.openExternal(url);
   } catch (ReferenceError) {
