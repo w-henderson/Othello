@@ -33,7 +33,6 @@ function renderBoard(showValidPositions: number = 0, letAIMakeMove: boolean = fa
   finalHTML += "</table>";
   document.getElementById("board").innerHTML = finalHTML;
 
-  let boardAlreadyRendered: boolean = false; // This is so we can change player turn without re-rendering
   if (!someValidMove) { // If the player can't move
     if (board.isFull()) { // If this is because the board is full, calculate the winner and end the game
       let pieces: number[] = board.piecesOfEachPlayer();
@@ -48,8 +47,9 @@ function renderBoard(showValidPositions: number = 0, letAIMakeMove: boolean = fa
       if (board.getPossibleMoves(showValidPositions === 1 ? 2 : 1).length > 0) { // If the other player can play, let them
         showMessage("Turn Missed", `Player ${board.playerTurn.toString()} couldn't move so play has passed to the other player.`);
         board.playerTurn = board.playerTurn === 1 ? 2 : 1;
-        renderBoard(board.playerTurn);
-        boardAlreadyRendered = true;
+        if (aiMode && board.playerTurn === 2) renderBoard(board.playerTurn, true);
+        else renderBoard(board.playerTurn);
+        return;
       } else { // If neither player can play, calculate the winner and end the game
         let pieces: number[] = board.piecesOfEachPlayer();
         if (pieces[0] > pieces[1]) {
@@ -64,7 +64,7 @@ function renderBoard(showValidPositions: number = 0, letAIMakeMove: boolean = fa
   }
 
   // If it's the AI's turn and they haven't already had a turn, wait a bit then let them make a move
-  if (letAIMakeMove && !boardAlreadyRendered) {
+  if (letAIMakeMove) {
     window.setTimeout(aiMakeMove, (Math.random() + 0.25) * 1000);
   }
 }
