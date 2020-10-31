@@ -1,4 +1,4 @@
-var server = "http://othelloserver.herokuapp.com/";
+var server = "https://othelloserver.herokuapp.com/";
 var onlinePlayer = 0;
 var onlineGameID = 0;
 var latestOnlineMove = [-1, -1];
