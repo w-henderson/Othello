@@ -25,4 +25,4 @@ If you want to play with a friend, but they don't have access to your physical c
 # Screenshots
 | The main screen of the app | How it looks when in-game | The online multiplayer menu |
 |:-------------------------:|:-------------------------:|:-------------------------:|
-|![Screenshot of Home](images/screenshot_home.png)|![Screenshot of Game](images/screenshot_game.png)|![Screenshot of Multiplayer Menu](images/screenshot_multiplayer_menu.png)|
+|![Screenshot of Home](images/screenshot_home.png)|![Screenshot of Game](images/screenshot_game.png)|![Screenshot of Multiplayer Menu](images/screenshot_multiplayer.png)|
