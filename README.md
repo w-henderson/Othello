@@ -7,21 +7,22 @@ This program is a simple yet beautiful Electron app to play the popular strategy
 There are three ways you can get this program.
 - [Download the binary](https://github.com/w-henderson/Othello/releases) (recommended)
 - [Play in a browser](https://w-henderson.github.io/Othello)
-- Clone the repo, install dependencies, then run `npm start`
+- Clone the repo, install dependencies, then run `npm start`. You can host the multiplayer server using `npm run serve`, but you'll need to change the `server` constant in `multiplayer.ts` to wherever you're hosting it.
 
-## Features
-This version of Othello features two modes, one where you can play against someone on the same computer, and another where you can play against a pretty basic AI. If you've ever looked into Othello strategies, you'll easily beat the AI, but less skilled players such as myself will have a hard time beating it! The program also features a stylish user interface with slick animations and a responsive feel.
+# Features
 
-## How does the AI work?
-The AI has several parameters that developers can customise. These are for changing the AI's percieved value of specific pieces on the board as well as how much it takes into account its opponent's possible moves. The AI calculates the value of each move as follows:
+## 🎲 Local Multiplayer
+The simplest way to play Othello is using local multiplayer. You can play against another player on the same computer for a lag-free and social experience. Simply press "Play (Normal)" on the main menu to start a local multiplayer game. Black plays first, and the black or white circle in the top right of the screen indicates whose turn it is currently.
 
-1. For each move, count the number of pieces the move would take.
-2. If the move is to a corner, add `cornerPieceValue` (default 3).
-3. If the move is to an edge (but not a corner), add `edgeValue` (default 0.5).
-4. Simulate making the move, then count how many possible moves the opponent would have, multiply by `opponentHelpMultiplier` (default 0.1), and subtract from the score.
+## 🤖 Play against a challenging AI
+If you don't have anyone to play with, you can play against the computer itself by selecting "Play (AI)". The AI, while nowhere near unbeatable, is about as skilled as an average player so it's fun to warm up against. It uses a complex algorithm which involves predicting its opponent's moves as well as valuing different locations on the board differently to decide which move is best. If you want more information about how the AI works, check out [the code](https://github.com/w-henderson/Othello/blob/master/www/ai.ts).
 
-The AI then sorts the possible moves by their scores, and chooses the best one.
+## 🌐 Online Multiplayer
+If you want to play with a friend, but they don't have access to your physical computer, you can play online multiplayer! This uses the power of the internet to play against someone from anywhere in the world - in a game like this, ping isn't really an issue. Simply select "Play (Online Multiplayer)" from the main menu, and press "Host Game" to host a game. After a few seconds, the Heroku server will awaken and you'll see the board. At this point, you give the Game ID at the top of the screen to your opponent, who enters it into the box and presses "Join Game". Once they're in-game, you can play as normal!
 
-## Screenshots
-![Screenshot of Home](images/screenshot_home.png)
-![Screenshot of Game](images/screenshot_game.png)
+**Note**: *This mode is still in development and could be buggy. If you come across any bugs, please open an issue!*
+
+# Screenshots
+| The main screen of the app | How it looks when in-game | The online multiplayer menu |
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|![Screenshot of Home](images/screenshot_home.png)|![Screenshot of Game](images/screenshot_game.png)|![Screenshot of Multiplayer Menu](images/screenshot_multiplayer_menu.png)|
