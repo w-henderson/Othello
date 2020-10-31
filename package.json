@@ -4,13 +4,20 @@
   "description": "A simple Electron app to play the game Othello.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "serve": "node ./server/server.js"
   },
   "author": "William Henderson",
   "repository": "https://github.com/w-henderson/Othello",
   "license": "GPL-3.0",
   "devDependencies": {
+    "@types/jquery": "^3.5.4",
     "electron": "^10.1.5",
-    "electron-reloader": "^1.0.1"
+    "electron-reloader": "^1.0.1",
+    "express": "^4.17.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "jquery": "^3.5.1"
   }
 }

@@ -2,6 +2,7 @@ const board: Board = new Board(8, 8);
 const ai: AI = new AI();
 
 var aiMode: boolean = false; // Whether the player is playing against the AI
+var gameRunning: boolean = false;
 
 // Function to update the visual representation of the board (also does some game management for some reason)
 function renderBoard(showValidPositions: number = 0, letAIMakeMove: boolean = false): void {
@@ -82,6 +83,8 @@ function showMessage(title: string, message: string): void {
 function endGameWithMessage(winner: number, message: string): void {
   if (winner != 0) showMessage(`Player ${winner.toString()} has won!`, message);
   else showMessage("It's a draw!", message);
+  gameRunning = false;
+  resetMultiplayer();
   window.setTimeout(function () {
     document.getElementById("board").className = "hidden";
     document.getElementById("turnIndicator").className = "fa fa-circle";
@@ -91,7 +94,12 @@ function endGameWithMessage(winner: number, message: string): void {
 }
 
 // Function to let the player make a move at coordinates (x, y)
-function makeMove(x: number, y: number): void {
+function makeMove(x: number, y: number, remote: boolean = false): void {
+  if (!remote && onlinePlayer != 0 && board.playerTurn != onlinePlayer) return; // If playing online and it's not the local player's turn, return
+  else if (!remote && onlinePlayer != 0 && board.playerTurn === onlinePlayer) { // If playing online and it is their turn
+    makeOnlineMove(board.playerTurn, x, y);
+  }
+
   menuActive = false; // Hide the menu
   updateMenuRender(); // Update the DOM to make sure the menu is hidden
   if (aiMode && board.playerTurn === 2) return; // If it's the AI's turn, return because this shouldn't be running
@@ -155,6 +163,7 @@ function startGame(useAI: boolean = false) {
   menuActive = false;
   updateMenuRender();
   aiMode = useAI;
+  gameRunning = true;
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive"; // Show the turn indicator
   document.getElementById("board").className = "";
   window.setTimeout(function () { // Wait for the board animation before rendering it to minimise lag

@@ -10,24 +10,38 @@
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=0.75">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>try{window.$=window.jQuery=require('jquery');}catch(_){}</script>
+
     <script src="compiled/board.js"></script>
     <script src="compiled/dropdown.js"></script>
     <script src="compiled/ai.js"></script>
+    <script src="compiled/multiplayer.js"></script>
     <script src="compiled/game.js"></script>
 </head>
 
 <body>
     <div class="browserContainer">
-        <div class="dragArea">Othello<span style="float:right;">
+        <div class="dragArea"><span id="mainTitle">Othello</span><span style="float:right;">
             <i class="fa fa-circle" style="color:black" id="turnIndicator"></i>
             <i class="fa fa-bars" style="-webkit-app-region: no-drag; cursor: pointer;" onclick="toggleDropdown();"></i>
         </span></div>
 
         <div id="board" class="hidden"></div>
-        <div id="menu">
+        <div id="menu" class="styledMenu">
             <h1>Welcome to Othello</h1>
             <button onclick="startGame();">Play (Normal)</button>
             <button onclick="startGame(true);">Play (AI)</button>
+            <button onclick="showMultiplayerMenu();">Play (Online Multiplayer)</button>
+        </div>
+
+        <div id="multiplayerMenu" class="styledMenu hidden">
+            <h1>Multiplayer</h1>
+            <input id="idInput" placeholder="Game ID"><br>
+            <button onclick="hostGame();">Host Game</button>
+            <button onclick="joinGame();">Join Game</button><br>
+            <button onclick="backToMainMenu();">Back to Main Menu</button>
         </div>
 
         <div id="message">
@@ -43,7 +57,7 @@
 
             <span style="cursor: text; font-size: 15px;">Developed by William Henderson, licensed under the GPL-3.0 license.</span><hr>
 
-            <span onclick="window.close()"><i class="fa fa-times-circle"></i> Exit Othello</span>            
+            <span onclick="endGame();window.close()"><i class="fa fa-times-circle"></i> Exit Othello</span>            
         </div>
     </div>
 </body>

@@ -141,7 +141,9 @@ class Board {
       let currentPosition: { x: number, y: number } = { x: x + direction[0], y: y + direction[1] };
       while (currentPosition.x >= 0 && currentPosition.x < this.width && currentPosition.y >= 0 && currentPosition.y < this.height) {
         if (!this.content[currentPosition.y][currentPosition.x].empty) {
-          if (this.content[currentPosition.y][currentPosition.x].player != player) { proposedPieces.push([currentPosition.x, currentPosition.y]); }
+          if (this.content[currentPosition.y][currentPosition.x].player != player) {
+            proposedPieces.push([currentPosition.x, currentPosition.y]);
+          }
           else {
             if (proposedPieces.length != 0) {
               piecesToTake = piecesToTake.concat(proposedPieces);

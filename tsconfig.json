@@ -6,6 +6,7 @@
         "www/board.ts",
         "www/dropdown.ts",
         "www/game.ts",
-        "www/ai.ts"
+        "www/ai.ts",
+        "www/multiplayer.ts"
     ]
 }

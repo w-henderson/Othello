@@ -1,6 +1,7 @@
 var board = new Board(8, 8);
 var ai = new AI();
 var aiMode = false; // Whether the player is playing against the AI
+var gameRunning = false;
 // Function to update the visual representation of the board (also does some game management for some reason)
 function renderBoard(showValidPositions, letAIMakeMove) {
     if (showValidPositions === void 0) { showValidPositions = 0; }
@@ -86,6 +87,8 @@ function endGameWithMessage(winner, message) {
         showMessage("Player " + winner.toString() + " has won!", message);
     else
         showMessage("It's a draw!", message);
+    gameRunning = false;
+    resetMultiplayer();
     window.setTimeout(function () {
         document.getElementById("board").className = "hidden";
         document.getElementById("turnIndicator").className = "fa fa-circle";
@@ -94,7 +97,13 @@ function endGameWithMessage(winner, message) {
     }, 3000);
 }
 // Function to let the player make a move at coordinates (x, y)
-function makeMove(x, y) {
+function makeMove(x, y, remote) {
+    if (remote === void 0) { remote = false; }
+    if (!remote && onlinePlayer != 0 && board.playerTurn != onlinePlayer)
+        return; // If playing online and it's not the local player's turn, return
+    else if (!remote && onlinePlayer != 0 && board.playerTurn === onlinePlayer) { // If playing online and it is their turn
+        makeOnlineMove(board.playerTurn, x, y);
+    }
     menuActive = false; // Hide the menu
     updateMenuRender(); // Update the DOM to make sure the menu is hidden
     if (aiMode && board.playerTurn === 2)
@@ -163,6 +172,7 @@ function startGame(useAI) {
     menuActive = false;
     updateMenuRender();
     aiMode = useAI;
+    gameRunning = true;
     document.getElementById("turnIndicator").className = "fa fa-circle tiActive"; // Show the turn indicator
     document.getElementById("board").className = "";
     window.setTimeout(function () {

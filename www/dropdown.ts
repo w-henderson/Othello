@@ -18,6 +18,8 @@ function endGame(): void {
   document.getElementById("board").className = "hidden";
   document.getElementById("turnIndicator").className = "fa fa-circle";
   board.reset();
+  gameRunning = false;
+  resetMultiplayer();
   menuActive = false;
   updateMenuRender();
   window.setTimeout(function () {
