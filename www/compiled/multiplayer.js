@@ -61,19 +61,6 @@ function backToMainMenu() {
     document.getElementById("menu").className = "styledMenu";
     document.getElementById("multiplayerMenu").className = "styledMenu hidden";
 }
-// Start an online game
-function startOnlineGame() {
-    var id = prompt("Game ID? Leave blank to host game.");
-    if (id == "") {
-        onlineGameID = Math.round(Math.random() * 1000000);
-        onlinePlayer = 1;
-        initiateOnlineGame();
-    }
-    else {
-    }
-    menuActive = false;
-    updateMenuRender();
-}
 function onlineGameStarted() {
     aiMode = false;
     gameRunning = true;

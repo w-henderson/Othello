@@ -84,12 +84,12 @@ function endGameWithMessage(winner: number, message: string): void {
   if (winner != 0) showMessage(`Player ${winner.toString()} has won!`, message);
   else showMessage("It's a draw!", message);
   gameRunning = false;
-  resetMultiplayer();
   window.setTimeout(function () {
     document.getElementById("board").className = "hidden";
     document.getElementById("turnIndicator").className = "fa fa-circle";
     board.reset();
     renderBoard(1);
+    resetMultiplayer();
   }, 3000);
 }
 

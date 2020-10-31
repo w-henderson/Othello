@@ -88,12 +88,12 @@ function endGameWithMessage(winner, message) {
     else
         showMessage("It's a draw!", message);
     gameRunning = false;
-    resetMultiplayer();
     window.setTimeout(function () {
         document.getElementById("board").className = "hidden";
         document.getElementById("turnIndicator").className = "fa fa-circle";
         board.reset();
         renderBoard(1);
+        resetMultiplayer();
     }, 3000);
 }
 // Function to let the player make a move at coordinates (x, y)

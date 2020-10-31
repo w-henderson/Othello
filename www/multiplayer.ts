@@ -66,20 +66,6 @@ function backToMainMenu(): void {
   document.getElementById("multiplayerMenu").className = "styledMenu hidden";
 }
 
-// Start an online game
-function startOnlineGame(): void {
-  let id = prompt("Game ID? Leave blank to host game.");
-  if (id == "") {
-    onlineGameID = Math.round(Math.random() * 1000000);
-    onlinePlayer = 1;
-    initiateOnlineGame();
-  } else {
-
-  }
-  menuActive = false;
-  updateMenuRender();
-}
-
 function onlineGameStarted(): void {
   aiMode = false;
   gameRunning = true;
