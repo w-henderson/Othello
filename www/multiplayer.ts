@@ -1,4 +1,4 @@
-const server: string = "https://othelloserver.herokuapp.com/";
+const server: string = "https://othelloserver.herokuapp.com";
 var onlinePlayer: number = 0;
 var onlineGameID: number = 0;
 
