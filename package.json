@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "serve": "node ./server/server.js"
+    "serve": "node ./server/server.js",
+    "build": "electron-packager . --icon images/icon.ico"
   },
   "author": "William Henderson",
   "repository": "https://github.com/w-henderson/Othello",

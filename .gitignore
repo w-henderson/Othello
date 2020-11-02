@@ -1,3 +1,7 @@
+# Builds
+othello-win32-x64/
+othello-win32-x64.rar
+
 # Logs
 logs
 *.log
