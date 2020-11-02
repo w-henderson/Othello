@@ -43,6 +43,7 @@ function hostGame(): void {
 
 function joinGame(): void {
   let id: string = (<HTMLInputElement>document.getElementById("idInput")).value;
+  (<HTMLInputElement>document.getElementById("idInput")).value = "";
   $.get(`${server}/validateID/${id}`, function (data) {
     if (data === "y") {
       showMessage("Valid Game ID", "The game ID was valid, have fun!");
@@ -69,6 +70,7 @@ function backToMainMenu(): void {
 function onlineGameStarted(): void {
   aiMode = false;
   gameRunning = true;
+  backToMainMenu();
   document.getElementById("turnIndicator").className = "fa fa-circle tiActive"; // Show the turn indicator
   document.getElementById("board").className = "";
   window.setTimeout(function () { // Wait for the board animation before rendering it to minimise lag

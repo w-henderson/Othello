@@ -40,6 +40,7 @@ function hostGame() {
 }
 function joinGame() {
     var id = document.getElementById("idInput").value;
+    document.getElementById("idInput").value = "";
     $.get(server + "/validateID/" + id, function (data) {
         if (data === "y") {
             showMessage("Valid Game ID", "The game ID was valid, have fun!");
@@ -64,6 +65,7 @@ function backToMainMenu() {
 function onlineGameStarted() {
     aiMode = false;
     gameRunning = true;
+    backToMainMenu();
     document.getElementById("turnIndicator").className = "fa fa-circle tiActive"; // Show the turn indicator
     document.getElementById("board").className = "";
     window.setTimeout(function () {
