@@ -2,11 +2,13 @@ class AI {
   cornerPieceValue: number; // How much the AI values capturing corner pieces
   edgeValue: number; // How much the AI values capturing edges
   opponentHelpMultiplier: number; // How much the AI values minimising opponent moves
+  openOpponentCornerPenalty: number; // How much the AI is penalised for opening a corner for its opponent
 
-  constructor(cornerPieceValue: number = 3, edgeValue: number = 0.5, opponentHelpMultiplier: number = 0.1) {
-    this.cornerPieceValue = cornerPieceValue;
-    this.edgeValue = edgeValue;
-    this.opponentHelpMultiplier = opponentHelpMultiplier;
+  constructor(cpv: number = 5, ev: number = 0.5, ohm: number = 0.04, oocp: number = 20) {
+    this.cornerPieceValue = cpv;
+    this.edgeValue = ev;
+    this.opponentHelpMultiplier = ohm;
+    this.openOpponentCornerPenalty = oocp;
   }
 
   makeMove(): number[] {
@@ -47,6 +49,14 @@ class AI {
   }
 
   getNextTurnProspects(move: number[]): number {
+    // Create array of corner piece coordinates given board dimensions
+    let cornerPieces: number[][] = [
+      [0, 0],
+      [0, board.width - 1],
+      [board.height - 1, 0],
+      [board.height - 1, board.width - 1]
+    ];
+
     // Duplicate the board and pieces into a completely separate instance so the original board isn't affected
     let virtualBoard: Board = new Board(board.width, board.height);
     virtualBoard.playerTurn = 2;
@@ -65,7 +75,15 @@ class AI {
     virtualBoard.place(new Piece(2), move[0], move[1]);
 
     let possibleOpponentMoves: number[][] = virtualBoard.getPossibleMoves(1); // Calculate what moves the opponent has
-    return possibleOpponentMoves.length; // Return how many there are
+    let opponentScore: number = 0;
+    possibleOpponentMoves.forEach(function (move) {
+      opponentScore += virtualBoard.getTakenPieces(1, move[0], move[1]).length;
+      if (cornerPieces.includes(move)) {
+        opponentScore += this.openOpponentCornerPenalty;
+      }
+    });
+
+    return opponentScore; // Return how many there are
   }
 }
 

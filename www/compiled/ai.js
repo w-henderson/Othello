@@ -1,11 +1,13 @@
 var AI = /** @class */ (function () {
-    function AI(cornerPieceValue, edgeValue, opponentHelpMultiplier) {
-        if (cornerPieceValue === void 0) { cornerPieceValue = 3; }
-        if (edgeValue === void 0) { edgeValue = 0.5; }
-        if (opponentHelpMultiplier === void 0) { opponentHelpMultiplier = 0.1; }
-        this.cornerPieceValue = cornerPieceValue;
-        this.edgeValue = edgeValue;
-        this.opponentHelpMultiplier = opponentHelpMultiplier;
+    function AI(cpv, ev, ohm, oocp) {
+        if (cpv === void 0) { cpv = 5; }
+        if (ev === void 0) { ev = 0.5; }
+        if (ohm === void 0) { ohm = 0.01; }
+        if (oocp === void 0) { oocp = 20; }
+        this.cornerPieceValue = cpv;
+        this.edgeValue = ev;
+        this.opponentHelpMultiplier = ohm;
+        this.openOpponentCornerPenalty = oocp;
     }
     AI.prototype.makeMove = function () {
         var possibleMoves = board.getPossibleMoves(2);
@@ -36,10 +38,18 @@ var AI = /** @class */ (function () {
         else if (move[0] == 0 || move[0] == board.height - 1 || move[1] == 0 || move[1] == board.width - 1)
             baseScore += this.edgeValue; // If it's an edge piece, increase its value
         var valueToOpponent = this.getNextTurnProspects(move); // Calculate how much the move will help the opponent
+        console.log(valueToOpponent);
         baseScore -= valueToOpponent * this.opponentHelpMultiplier; // Account for it
         return baseScore;
     };
     AI.prototype.getNextTurnProspects = function (move) {
+        // Create array of corner piece coordinates given board dimensions
+        var cornerPieces = [
+            [0, 0],
+            [0, board.width - 1],
+            [board.height - 1, 0],
+            [board.height - 1, board.width - 1]
+        ];
         // Duplicate the board and pieces into a completely separate instance so the original board isn't affected
         var virtualBoard = new Board(board.width, board.height);
         virtualBoard.playerTurn = 2;
@@ -56,7 +66,14 @@ var AI = /** @class */ (function () {
         });
         virtualBoard.place(new Piece(2), move[0], move[1]);
         var possibleOpponentMoves = virtualBoard.getPossibleMoves(1); // Calculate what moves the opponent has
-        return possibleOpponentMoves.length; // Return how many there are
+        var opponentScore = 0;
+        possibleOpponentMoves.forEach(function (move) {
+            opponentScore += virtualBoard.getTakenPieces(1, move[0], move[1]).length;
+            if (cornerPieces.includes(move)) {
+                opponentScore += this.openOpponentCornerPenalty;
+            }
+        });
+        return opponentScore; // Return how many there are
     };
     return AI;
 }());
