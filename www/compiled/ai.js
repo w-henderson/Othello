@@ -2,7 +2,7 @@ var AI = /** @class */ (function () {
     function AI(cpv, ev, ohm, oocp) {
         if (cpv === void 0) { cpv = 5; }
         if (ev === void 0) { ev = 0.5; }
-        if (ohm === void 0) { ohm = 0.01; }
+        if (ohm === void 0) { ohm = 0.04; }
         if (oocp === void 0) { oocp = 20; }
         this.cornerPieceValue = cpv;
         this.edgeValue = ev;
@@ -38,7 +38,6 @@ var AI = /** @class */ (function () {
         else if (move[0] == 0 || move[0] == board.height - 1 || move[1] == 0 || move[1] == board.width - 1)
             baseScore += this.edgeValue; // If it's an edge piece, increase its value
         var valueToOpponent = this.getNextTurnProspects(move); // Calculate how much the move will help the opponent
-        console.log(valueToOpponent);
         baseScore -= valueToOpponent * this.opponentHelpMultiplier; // Account for it
         return baseScore;
     };

@@ -93,9 +93,11 @@ function makeOnlineMove(player: number, x: number, y: number): void {
 
 // Reset multiplayer
 function resetMultiplayer(): void {
-  $.get(`${server}/endGame/${onlineGameID}`);
-  document.getElementById("mainTitle").innerHTML = "Othello";
-  onlinePlayer = 0;
-  onlineGameID = 0;
-  latestOnlineMove = [-1, -1];
+  if (onlinePlayer != 0) {
+    $.get(`${server}/endGame/${onlineGameID}`);
+    document.getElementById("mainTitle").innerHTML = "Othello";
+    onlinePlayer = 0;
+    onlineGameID = 0;
+    latestOnlineMove = [-1, -1];
+  }
 }
